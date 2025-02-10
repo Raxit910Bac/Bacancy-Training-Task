@@ -17,3 +17,14 @@ while (i < arr2.length) {
   });
   i++;
 }
+
+
+// Difference Between Wile & ForEach Loop:
+// 
+// While Loop:
+// - Iteration can be controlled with condition
+// - 'i++' is used increment manually
+// 
+// ForEach Loop:
+// - used to iterate over each element
+// - no break & no continue statement can be used
