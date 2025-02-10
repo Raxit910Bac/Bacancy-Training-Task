@@ -3,7 +3,7 @@
 // Create a program that uses a while loop to iterate through an array of strings. Inside the loop, use forEach to print each string with an appended exclamation mark. The loop should terminate once the length of the current string exceeds 8 characters. Comment on the differences between while and forEach in this context.
 
 
-const arr2 = ["hello", "world", "newHelloo", "newWorld"];
+const arr2 = ["hello", "world", "newHelloPeople", "newWorld"];
 
 console.log("Original Array: ", arr2);
 
