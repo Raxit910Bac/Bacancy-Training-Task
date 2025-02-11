@@ -1,0 +1,52 @@
+<!-- // Task 17 - “this” with event handlers
+
+// Create an HTML button with the id "myButton" and an associated JavaScript function. Inside the function, use both a
+normal function and an arrow function to handle the button click event. Inside each function, use the "this" keyword to
+log the text content of the button. Add the event listeners to the button to trigger both functions.> -->
+
+
+<html>
+
+<head>
+  <title>
+    Button Click Demo
+  </title>
+</head>
+
+<body>
+  <h1>
+    Button Click Demo Example
+  </h1>
+  <button id="myButton">Click Here!</button>
+  <script>
+    const demoButton = document.getElementById("myButton");
+    // Normal function
+    function handleClickNormal() {
+      console.log("Normal function:");
+      console.log("Button text:", this.textContent);
+    }
+
+    // Arrow function
+    const handleClickArrow = () => {
+      console.log("Arrow function:");
+      console.log("Button text:", this.textContent);
+    };
+
+    // Add both event listeners to the button
+    demoButton.addEventListener("click", handleClickNormal);  // 'this' refers to the button
+    demoButton.addEventListener("click", handleClickArrow);   // 'this' is undefined (inherits from global scope)
+
+  </script>
+</body>
+
+</html>
+
+<!-- Notes:
+1. Normal Function (handleClickNormal):
+- When called as an event handler, this refers to the element that triggered the event (button in this case).
+- this.textContent logs the button’s text: "Click Me". 
+
+2. Arrow Function (handleClickArrow):
+- Arrow functions don’t have their own this. Instead, they inherit this from their surrounding scope (which in this case is the global scope, where this is undefined in strict mode).
+- Since this is undefined, this.textContent will either throw an error or return "this is undefined".
+-->
