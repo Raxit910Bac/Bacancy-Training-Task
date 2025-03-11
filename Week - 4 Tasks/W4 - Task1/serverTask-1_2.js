@@ -12,12 +12,25 @@ let books = [
   { id: 3, title: "Sapiens", author: "Yuval Noah Harari", year: 2011 },
 ];
 
+// Middleware for role-based authentication
+const checkRole = (req, res, next) => {
+  const role = req.headers.role; // Read role from request headers
+
+  if(!role || (role !== "admin" && role !== "librarian")) {
+    return res.status(403).json({message: "Access denied. Only Admins or Librarians can perform this action."});
+  }
+
+  next(); // If role is valid, proceed to the next middleware or route handler
+}
+
 // GET all books
+// GET all books (No role check needed)
 app.get("/books", (req, res) => {
   res.status(200).json(books); 
 })
 
 // GET a book by ID
+// GET a book by ID (No role check needed)
 app.get("/books/:id", (req, res) => {
   const bookID = parseInt(req.params.id);
   const book = books.find((b) => b.id === bookID);
@@ -48,8 +61,8 @@ app.post("/books/getBookById", (req, res) => {
 });
 
 
-// POST - Add a new Book
-app.post("/books", (req, res) => {
+// POST - Add a new Book (Requires admin/librarian role)
+app.post("/books", checkRole, (req, res) => {
   const {title, author, year} = req.body;
 
   if(!title || !author || !year) {
@@ -63,8 +76,8 @@ app.post("/books", (req, res) => {
 })
 
 
-// PUT - Update a book by ID
-app.put("/books/:id", (req, res) => {
+// PUT - Update a book by ID (Requires admin/librarian role)
+app.put("/books/:id", checkRole, (req, res) => {
   const bookID = parseInt(req.params.id);
   const {title, author, year} = req.body;
   const bookIndex = books.findIndex((b) => b.id === bookID);
@@ -78,8 +91,8 @@ app.put("/books/:id", (req, res) => {
   res.status(200).json({message: "Book Data updated successfully.", book: books[bookIndex]})
 })
 
-// DELETE - Remove a book by ID
-app.delete("/books/:id", (req, res) => {
+// DELETE - Remove a book by ID (Requires admin/librarian role)
+app.delete("/books/:id", checkRole, (req, res) => {
   const bookID = parseInt(req.params.id);
   const bookIndex = books.findIndex((b) => b.id === bookID);
 
